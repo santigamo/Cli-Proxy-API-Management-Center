@@ -2443,9 +2443,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "缓存命中率",
+    "cache_rate": "命中率：{{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "按提供商的记账规则，以缓存读取量除以输入令牌总数。",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2471,6 +2474,7 @@
     "retry": "Try again",
     "day": "{{count}} 天",
     "switching": "正在连接组织…",
-    "session_expired": "此组织会话已过期，请重新选择以连接。"
+    "session_expired": "此组织会话已过期，请重新选择以连接。",
+    "cache_rate_hint": "已复用的输入令牌；— 表示数据不足。"
   }
 }

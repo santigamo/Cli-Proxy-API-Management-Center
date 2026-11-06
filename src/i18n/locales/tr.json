@@ -2445,9 +2445,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "Önbellek isabet oranı",
+    "cache_rate": "İsabet oranı: {{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "Sağlayıcıya özgü hesaplamayla önbellek okumalarının toplam giriş tokenlarına oranı.",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2473,6 +2476,7 @@
     "retry": "Try again",
     "day": "{{count}} gün",
     "switching": "Kuruluşa bağlanılıyor…",
-    "session_expired": "Kuruluş oturumu sona erdi. Yeniden bağlanmak için tekrar seçin."
+    "session_expired": "Kuruluş oturumu sona erdi. Yeniden bağlanmak için tekrar seçin.",
+    "cache_rate_hint": "Yeniden kullanılan giriş tokenları; — yetersiz veri anlamına gelir."
   }
 }

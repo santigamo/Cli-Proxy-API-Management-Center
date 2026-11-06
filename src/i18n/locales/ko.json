@@ -2445,9 +2445,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "캐시 적중률",
+    "cache_rate": "적중률: {{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "제공업체별 계산 규칙에 따라 캐시 읽기 토큰을 전체 입력 토큰으로 나눈 값입니다.",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2473,6 +2476,7 @@
     "retry": "Try again",
     "day": "{{count}}일",
     "switching": "조직에 연결하는 중…",
-    "session_expired": "조직 세션이 만료되었습니다. 다시 선택해 연결하세요."
+    "session_expired": "조직 세션이 만료되었습니다. 다시 선택해 연결하세요.",
+    "cache_rate_hint": "재사용된 입력 토큰 비율입니다. —는 데이터가 부족함을 뜻합니다."
   }
 }

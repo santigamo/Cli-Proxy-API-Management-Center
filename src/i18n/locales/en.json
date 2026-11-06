@@ -2445,9 +2445,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "Cache hit rate",
+    "cache_rate": "Hit rate: {{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "Cache reads divided by total input tokens, using provider-specific accounting.",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2473,6 +2476,7 @@
     "retry": "Try again",
     "day": "{{count}} day",
     "switching": "Connecting to organization…",
-    "session_expired": "This organization session expired. Select it again to reconnect."
+    "session_expired": "This organization session expired. Select it again to reconnect.",
+    "cache_rate_hint": "Input tokens reused; — means insufficient data."
   }
 }

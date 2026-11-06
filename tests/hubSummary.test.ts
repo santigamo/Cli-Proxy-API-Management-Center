@@ -5,6 +5,7 @@ import {
   getHubSummaryUrl,
   hubManagementRequestHeaders,
   summarizeHubTotals,
+  cacheHitRate,
   type HubTotals,
 } from '../src/services/api/hub';
 import { buildModelsRequest } from '../src/services/api/models';
@@ -77,6 +78,39 @@ describe('hub summary aggregation', () => {
 
   test('summary query carries the selected organization and period', () => {
     expect(getHubSummaryUrl(7, 'oasis')).toBe('/api/summary?days=7&organization=oasis');
+  });
+
+  test('cache hit rate aggregates subset and independent provider input semantics', () => {
+    expect(
+      cacheHitRate([
+        { provider: 'codex', input_tokens: 100, cache_read_tokens: 80, cache_creation_tokens: 0 },
+        { provider: 'claude', input_tokens: 10, cache_read_tokens: 30, cache_creation_tokens: 10 },
+      ])
+    ).toBeCloseTo((110 / 150) * 100);
+  });
+
+  test('cache hit rate is unavailable for zero input, unknown usage, and invalid subsets', () => {
+    expect(
+      cacheHitRate([
+        { provider: 'codex', input_tokens: 0, cache_read_tokens: 0, cache_creation_tokens: 0 },
+      ])
+    ).toBeNull();
+    expect(
+      cacheHitRate([
+        { provider: 'codex', input_tokens: 100, cache_read_tokens: 50, cache_creation_tokens: 0 },
+        {
+          provider: 'mystery-provider',
+          input_tokens: 100,
+          cache_read_tokens: 0,
+          cache_creation_tokens: 0,
+        },
+      ])
+    ).toBeNull();
+    expect(
+      cacheHitRate([
+        { provider: 'codex', input_tokens: 100, cache_read_tokens: 80, cache_creation_tokens: 30 },
+      ])
+    ).toBeNull();
   });
 
   test('native session targets the scoped proxy with only the nonsecret placeholder', () => {

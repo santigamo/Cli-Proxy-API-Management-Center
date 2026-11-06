@@ -2451,9 +2451,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "Tỷ lệ cache hit",
+    "cache_rate": "Tỷ lệ hit: {{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "Token đọc từ cache chia cho tổng token đầu vào theo quy tắc của nhà cung cấp.",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2479,6 +2482,7 @@
     "retry": "Try again",
     "day": "{{count}} ngày",
     "switching": "Đang kết nối với tổ chức…",
-    "session_expired": "Phiên của tổ chức đã hết hạn. Hãy chọn lại để kết nối."
+    "session_expired": "Phiên của tổ chức đã hết hạn. Hãy chọn lại để kết nối.",
+    "cache_rate_hint": "Token đầu vào được tái sử dụng; — nghĩa là chưa đủ dữ liệu."
   }
 }

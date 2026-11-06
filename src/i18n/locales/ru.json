@@ -2439,9 +2439,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "Попадания в кэш",
+    "cache_rate": "Доля попаданий: {{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "Чтения кэша, делённые на общее число входных токенов с учётом провайдера.",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2467,6 +2470,7 @@
     "retry": "Try again",
     "day": "{{count}} день",
     "switching": "Подключение к организации…",
-    "session_expired": "Сеанс организации истёк. Выберите её снова, чтобы подключиться."
+    "session_expired": "Сеанс организации истёк. Выберите её снова, чтобы подключиться.",
+    "cache_rate_hint": "Повторно использованные входные токены; — означает недостаточно данных."
   }
 }

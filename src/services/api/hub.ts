@@ -22,6 +22,76 @@ export type HubSummary = {
   updated: string | null;
 };
 
+type CacheInputUsage = { cacheRead: number; inputTotal: number; complete: boolean };
+
+/** Match CLIProxyAPI v8.0.58 tokenAccountingSemanticsFor provider rules. */
+export function cacheInputUsage(
+  row: Pick<HubModel, 'provider' | 'input_tokens' | 'cache_read_tokens' | 'cache_creation_tokens'>
+): CacheInputUsage {
+  const provider = row.provider.trim().toLowerCase();
+  const value = provider;
+  const nonnegative = [row.input_tokens, row.cache_read_tokens, row.cache_creation_tokens].every(
+    (token) => Number.isFinite(token) && token >= 0
+  );
+  if (!nonnegative) return { cacheRead: 0, inputTotal: 0, complete: false };
+  let semantics: 'subset' | 'independent' | 'unknown' = 'unknown';
+  if (provider === 'openai-compatibility' || provider.startsWith('openai-compatible-')) {
+    semantics = 'subset';
+  } else if (value.includes('claude') || value.includes('anthropic')) {
+    semantics = 'independent';
+  } else if (
+    [
+      'gemini',
+      'aistudio',
+      'antigravity',
+      'vertex',
+      'interaction',
+      'openai',
+      'codex',
+      'xai',
+      'grok',
+      'kimi',
+      'qwen',
+      'deepseek',
+      'openrouter',
+    ].some((marker) => value.includes(marker))
+  ) {
+    semantics = 'subset';
+  }
+
+  if (semantics === 'unknown') {
+    return {
+      cacheRead: 0,
+      inputTotal: 0,
+      complete:
+        row.input_tokens === 0 && row.cache_read_tokens === 0 && row.cache_creation_tokens === 0,
+    };
+  }
+  return {
+    cacheRead: row.cache_read_tokens,
+    inputTotal:
+      semantics === 'independent'
+        ? row.input_tokens + row.cache_read_tokens + row.cache_creation_tokens
+        : row.input_tokens,
+    complete:
+      semantics !== 'subset' ||
+      row.cache_read_tokens + row.cache_creation_tokens <= row.input_tokens,
+  };
+}
+
+export function cacheHitRate(
+  rows: Array<
+    Pick<HubModel, 'provider' | 'input_tokens' | 'cache_read_tokens' | 'cache_creation_tokens'>
+  >
+): number | null {
+  const usage = rows.map(cacheInputUsage);
+  if (usage.some((item) => !item.complete)) return null;
+  const inputTotal = usage.reduce((sum, item) => sum + item.inputTotal, 0);
+  return inputTotal > 0
+    ? (usage.reduce((sum, item) => sum + item.cacheRead, 0) / inputTotal) * 100
+    : null;
+}
+
 const ADDITIVE_TOTAL_FIELDS = [
   'requests',
   'input_tokens',

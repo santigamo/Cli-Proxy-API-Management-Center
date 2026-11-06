@@ -3,12 +3,21 @@ import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { getHubSummary, summarizeHubTotals, type HubSummary } from '@/services/api/hub';
+import {
+  cacheHitRate,
+  getHubSummary,
+  summarizeHubTotals,
+  type HubSummary,
+} from '@/services/api/hub';
 import { useHubSession } from './hubSessionContext';
 import styles from './HubPage.module.scss';
 
 const PERIODS = [1, 7, 30, 90] as const;
 const number = (value: number) => new Intl.NumberFormat().format(value || 0);
+const percent = (value: number | null, locale: string) =>
+  value === null
+    ? '—'
+    : `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)}%`;
 
 export function HubPage({ refreshKey }: { refreshKey: number }) {
   const { t, i18n } = useTranslation();
@@ -49,6 +58,9 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
 
   const scoped = summary;
   const totals = summary ? summarizeHubTotals(summary.totals, organization) : undefined;
+  const models =
+    scoped?.models.filter((row) => organization === 'all' || row.client === organization) ?? [];
+  const overallCacheHitRate = cacheHitRate(models);
   const hasActivity = Boolean(scoped && (scoped.totals.length > 0 || scoped.models.length > 0));
   const dailyRows = scoped?.daily.reduce((result, row) => {
     const previous = result.get(row.day) ?? {
@@ -143,7 +155,17 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
               >
                 <div className={styles.metricLabel}>{item.label}</div>
                 <div className={styles.metricValue}>{number(item.value)}</div>
-                {(item.key === 'cache_read' || item.key === 'cache_creation') && (
+                {item.key === 'cache_read' && (
+                  <>
+                    <div className={styles.metricNote}>
+                      <span title={t('hub.cache_rate_note')}>
+                        {t('hub.cache_rate', { rate: percent(overallCacheHitRate, i18n.language) })}
+                      </span>
+                    </div>
+                    <div className={styles.metricNote}>{t('hub.cache_rate_hint')}</div>
+                  </>
+                )}
+                {item.key === 'cache_creation' && (
                   <div className={styles.metricNote}>{t('hub.cache_note')}</div>
                 )}
               </Card>
@@ -252,6 +274,7 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
                       <th>{t('hub.requests')}</th>
                       <th>{t('hub.input_tokens')}</th>
                       <th>{t('hub.output_tokens')}</th>
+                      <th>{t('hub.cache_hit_rate')}</th>
                       <th>{t('hub.reported_total')}</th>
                       <th>{t('hub.errors_short')}</th>
                     </tr>
@@ -267,6 +290,7 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
                         <td>{number(row.requests)}</td>
                         <td>{number(row.input_tokens)}</td>
                         <td>{number(row.output_tokens)}</td>
+                        <td>{percent(cacheHitRate([row]), i18n.language)}</td>
                         <td>{number(row.total_tokens)}</td>
                         <td>{number(row.failed)}</td>
                       </tr>

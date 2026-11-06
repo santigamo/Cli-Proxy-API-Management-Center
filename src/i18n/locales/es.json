@@ -2445,9 +2445,12 @@
     "input_tokens": "Tokens de entrada",
     "output_tokens": "Tokens de salida",
     "cache_read": "Lectura de caché",
+    "cache_hit_rate": "Tasa de aciertos de caché",
+    "cache_rate": "Aciertos: {{rate}}",
     "cache_creation": "Creación de caché",
     "reasoning_tokens": "Tokens de razonamiento",
     "cache_note": "Dato informado por separado; puede estar incluido en el total del proveedor",
+    "cache_rate_note": "Lecturas de caché divididas por tokens de entrada totales, según el proveedor.",
     "requests": "Solicitudes",
     "errors": "{{count}} errores",
     "errors_short": "Errores",
@@ -2473,6 +2476,7 @@
     "retry": "Reintentar",
     "day": "{{count}} día",
     "switching": "Conectando con la organización…",
-    "session_expired": "La sesión de esta organización ha caducado. Selecciónala de nuevo para reconectar."
+    "session_expired": "La sesión de esta organización ha caducado. Selecciónala de nuevo para reconectar.",
+    "cache_rate_hint": "Tokens de entrada reutilizados; — indica datos insuficientes."
   }
 }

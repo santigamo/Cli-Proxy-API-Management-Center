@@ -2471,9 +2471,12 @@
     "input_tokens": "Input tokens",
     "output_tokens": "Output tokens",
     "cache_read": "Cache read",
+    "cache_hit_rate": "快取命中率",
+    "cache_rate": "命中率：{{rate}}",
     "cache_creation": "Cache creation",
     "reasoning_tokens": "Reasoning tokens",
     "cache_note": "Reported separately; included in provider totals where applicable",
+    "cache_rate_note": "依提供者的計算規則，以快取讀取量除以輸入 token 總數。",
     "requests": "Requests",
     "errors": "{{count}} errors",
     "errors_short": "Errors",
@@ -2499,6 +2502,7 @@
     "retry": "Try again",
     "day": "{{count}} 天",
     "switching": "正在連線組織…",
-    "session_expired": "此組織工作階段已過期，請重新選取以連線。"
+    "session_expired": "此組織工作階段已過期，請重新選取以連線。",
+    "cache_rate_hint": "已重用的輸入 token；— 表示資料不足。"
   }
 }
