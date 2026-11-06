@@ -4,7 +4,7 @@
 
 export type Theme = 'light' | 'white' | 'dark' | 'auto';
 
-export type Language = 'zh-CN' | 'zh-TW' | 'en' | 'ru' | 'vi' | 'ko' | 'tr';
+export type Language = 'zh-CN' | 'zh-TW' | 'en' | 'ru' | 'vi' | 'ko' | 'tr' | 'es';
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 

@@ -1945,7 +1945,8 @@
     "russian": "Русский",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어",
-    "turkish": "Турецкий"
+    "turkish": "Турецкий",
+    "spanish": "Испанский"
   },
   "theme": {
     "switch": "Тема",
@@ -2077,7 +2078,7 @@
       "activeCount": "{{active}}/{{total}} активных"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2140,8 +2141,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "Все URL используют одинаковые правила API. При сохранении записывается только endpoint текущего группового протокола.",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "Глобальный маршрут с усиленной защитой",
-         "aiCodeMirrorDomestic": "Оптимизированный маршрут для материкового Китая",
+        "aiCodeMirrorGlobal": "Глобальный маршрут с усиленной защитой",
+        "aiCodeMirrorDomestic": "Оптимизированный маршрут для материкового Китая",
         "standard": "Обычный URL",
         "direct": "Прямой URL",
         "domestic": "Маршрут для материкового Китая",
@@ -2150,8 +2151,8 @@
         "global": "Глобальный"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "Маршрут с усиленной защитой для доступа по всему миру.",
-         "aiCodeMirrorDomestic": "Маршрут, оптимизированный для сетей материкового Китая.",
+        "aiCodeMirrorGlobal": "Маршрут с усиленной защитой для доступа по всему миру.",
+        "aiCodeMirrorDomestic": "Маршрут, оптимизированный для сетей материкового Китая.",
         "domestic": "Для пользователей и нагрузок в материковом Китае; обычно дает меньшую задержку в сетях материкового Китая.",
         "overseas": "Для зарубежных развертываний, трансграничного доступа или задач, которым нужны зарубежные модели.",
         "mainlandChinaRecommended": "Рекомендуется для пользователей и нагрузок в сетях материкового Китая.",
@@ -2422,5 +2423,47 @@
     "error": "Привязка не удалась. Начните заново.",
     "unsupported": "Этот сервер не поддерживает привязку SIWC.",
     "expired": "Сеанс привязки истёк. Начните заново."
+  },
+  "hub": {
+    "header": "CLI Proxy API Management Center",
+    "navigation": "Hub navigation",
+    "refresh": "Refresh",
+    "eyebrow": "Usage overview",
+    "title": "Organizations",
+    "subtitle": "Usage overview for {{organization}}",
+    "organization": "Organization",
+    "all_organizations": "All organizations",
+    "period": "Period",
+    "days": "{{count}} days",
+    "reported_total": "Reported total",
+    "input_tokens": "Input tokens",
+    "output_tokens": "Output tokens",
+    "cache_read": "Cache read",
+    "cache_creation": "Cache creation",
+    "reasoning_tokens": "Reasoning tokens",
+    "cache_note": "Reported separately; included in provider totals where applicable",
+    "requests": "Requests",
+    "errors": "{{count}} errors",
+    "errors_short": "Errors",
+    "usage_summary": "Usage summary",
+    "daily_activity": "Daily activity",
+    "daily_chart_label": "Daily reported token activity",
+    "collector_status": "Collector status",
+    "last_success": "Last successful collection {{date}}",
+    "never_collected": "No successful collection yet",
+    "status_ok": "Current",
+    "status_error": "Error",
+    "status_waiting": "Waiting",
+    "no_collector_data": "No collector status reported",
+    "updated": "Data updated {{date}}",
+    "model_usage": "Usage by model",
+    "provider": "Provider",
+    "model": "Model",
+    "no_activity": "No usage recorded in this period.",
+    "empty_title": "No token usage yet",
+    "empty_description": "Usage will appear here after the collector records its first report.",
+    "load_error": "Could not load hub data",
+    "loading": "Loading usage…",
+    "retry": "Try again"
   }
 }

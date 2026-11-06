@@ -554,7 +554,6 @@
     "reset_confirm_button": "確認重置",
     "reset_not_confirmed": "尚未確認額度重置成功，請重新整理額度後再決定是否重試。",
     "reset_cooldown_failed": "額度已重置，但代理冷卻清除失敗。請在原連線的認證檔案頁面使用「清除冷卻」，不要再次消耗重置卡。",
-
     "reset_success": "已重置「{{name}}」的 Codex 配額",
     "reset_failed": "重置「{{name}}」的 Codex 配額失敗：{{message}}",
     "plan_plus": "Plus",
@@ -1978,7 +1977,8 @@
     "russian": "俄文",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어",
-    "turkish": "土耳其文"
+    "turkish": "土耳其文",
+    "spanish": "西班牙語"
   },
   "theme": {
     "switch": "主題",
@@ -2110,7 +2110,7 @@
       "activeCount": "{{active}}/{{total}} 活躍"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2173,8 +2173,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "不同 URL 的使用規範一致,儲存時只會寫入目前分組協議對應位址。",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "全球高保線路",
-         "aiCodeMirrorDomestic": "國內優化線路",
+        "aiCodeMirrorGlobal": "全球高保線路",
+        "aiCodeMirrorDomestic": "國內優化線路",
         "standard": "普通 URL",
         "direct": "專線直連 URL",
         "domestic": "中國大陸線路",
@@ -2183,8 +2183,8 @@
         "global": "全球"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "適用於全球存取的高防護線路。",
-         "aiCodeMirrorDomestic": "針對中國大陸網路最佳化的線路。",
+        "aiCodeMirrorGlobal": "適用於全球存取的高防護線路。",
+        "aiCodeMirrorDomestic": "針對中國大陸網路最佳化的線路。",
         "domestic": "面向中國大陸使用者和部署在中國大陸網路環境中的業務，通常可獲得更低延遲。",
         "overseas": "面向海外部署、跨境存取或需要存取境外模型的業務。",
         "mainlandChinaRecommended": "推薦中國大陸使用者和部署在中國大陸網路環境中的業務使用。",
@@ -2455,5 +2455,47 @@
     "error": "綁定失敗，請重新開始。",
     "unsupported": "目前後端不支援 SIWC 綁定。",
     "expired": "綁定工作階段已過期，請重新開始。"
+  },
+  "hub": {
+    "header": "CLI Proxy API Management Center",
+    "navigation": "Hub navigation",
+    "refresh": "Refresh",
+    "eyebrow": "Usage overview",
+    "title": "Organizations",
+    "subtitle": "Usage overview for {{organization}}",
+    "organization": "Organization",
+    "all_organizations": "All organizations",
+    "period": "Period",
+    "days": "{{count}} days",
+    "reported_total": "Reported total",
+    "input_tokens": "Input tokens",
+    "output_tokens": "Output tokens",
+    "cache_read": "Cache read",
+    "cache_creation": "Cache creation",
+    "reasoning_tokens": "Reasoning tokens",
+    "cache_note": "Reported separately; included in provider totals where applicable",
+    "requests": "Requests",
+    "errors": "{{count}} errors",
+    "errors_short": "Errors",
+    "usage_summary": "Usage summary",
+    "daily_activity": "Daily activity",
+    "daily_chart_label": "Daily reported token activity",
+    "collector_status": "Collector status",
+    "last_success": "Last successful collection {{date}}",
+    "never_collected": "No successful collection yet",
+    "status_ok": "Current",
+    "status_error": "Error",
+    "status_waiting": "Waiting",
+    "no_collector_data": "No collector status reported",
+    "updated": "Data updated {{date}}",
+    "model_usage": "Usage by model",
+    "provider": "Provider",
+    "model": "Model",
+    "no_activity": "No usage recorded in this period.",
+    "empty_title": "No token usage yet",
+    "empty_description": "Usage will appear here after the collector records its first report.",
+    "load_error": "Could not load hub data",
+    "loading": "Loading usage…",
+    "retry": "Try again"
   }
 }

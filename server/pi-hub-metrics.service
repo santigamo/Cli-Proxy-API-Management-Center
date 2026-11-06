@@ -1,0 +1,28 @@
+[Unit]
+Description=Local read-only CLIProxyAPI usage dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=pi-hub-metrics
+Group=pi-hub-metrics
+StateDirectory=pi-hub-metrics
+StateDirectoryMode=0700
+UMask=0077
+WorkingDirectory=/opt/pi-hub-metrics/current
+Environment=HUB_METRICS_DB=/var/lib/pi-hub-metrics/usage.sqlite3
+Environment=HUB_CONFIG=/etc/pi-hub-metrics/config.json
+Environment=HUB_UI_PATH=/opt/pi-hub-metrics/current/index.html
+ExecStart=/usr/bin/python3 /opt/pi-hub-metrics/current/server/hub.py --host 127.0.0.1 --port 8320
+Restart=on-failure
+RestartSec=3
+MemoryMax=128M
+TasksMax=64
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pi-hub-metrics
+
+[Install]
+WantedBy=multi-user.target

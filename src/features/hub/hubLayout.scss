@@ -1,0 +1,55 @@
+.hub-shell .main-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hub-header-label {
+  position: absolute;
+  left: calc(var(--sidebar-active-width) + 28px);
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+.hub-header-mark {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--viz-success);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--viz-success) 15%, transparent);
+}
+
+.hub-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hub-header .header-actions > * {
+  pointer-events: auto;
+}
+.hub-sidebar .nav-item {
+  cursor: default;
+}
+.hub-main-content {
+  padding-top: calc(var(--header-height) + 26px);
+}
+
+@media (max-width: 768px) {
+  .hub-header-label {
+    display: none;
+  }
+  .hub-header .header-actions {
+    margin-right: 14px;
+  }
+  .hub-main-content {
+    padding-top: calc(var(--header-height) + 16px);
+  }
+}

@@ -42,6 +42,7 @@ export const LANGUAGE_ORDER = defineLanguageOrder([
   'vi',
   'ko',
   'tr',
+  'es',
 ] as const);
 export const LANGUAGE_LABEL_KEYS: Record<Language, string> = {
   'zh-CN': 'language.chinese',
@@ -51,6 +52,7 @@ export const LANGUAGE_LABEL_KEYS: Record<Language, string> = {
   vi: 'language.vietnamese',
   ko: 'language.korean',
   tr: 'language.turkish',
+  es: 'language.spanish',
 };
 export const SUPPORTED_LANGUAGES = LANGUAGE_ORDER;
 

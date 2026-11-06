@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@/styles/global.scss';
 import { INLINE_LOGO_JPEG } from '@/assets/logoInline';
-import App from './App.tsx';
 
 document.title = 'CLI Proxy API Management Center';
 document.documentElement.setAttribute('translate', 'no');
@@ -20,8 +19,13 @@ if (faviconEl) {
   document.head.appendChild(newFavicon);
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+const selectedApp =
+  import.meta.env.VITE_HUB_MODE === 'true' ? import('./HubApp.tsx') : import('./App.tsx');
+
+selectedApp.then(({ default: App }) => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+});

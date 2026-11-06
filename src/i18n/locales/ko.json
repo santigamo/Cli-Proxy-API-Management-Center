@@ -1951,7 +1951,8 @@
     "russian": "Русский",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어",
-    "turkish": "터키어"
+    "turkish": "터키어",
+    "spanish": "스페인어"
   },
   "theme": {
     "switch": "테마",
@@ -2083,7 +2084,7 @@
       "activeCount": "활성 {{active}}/{{total}}"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2146,8 +2147,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "모든 URL은 동일한 API 규칙을 사용합니다. 저장 시 현재 그룹화된 프로토콜의 엔드포인트만 기록됩니다.",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "글로벌 고보호 경로",
-         "aiCodeMirrorDomestic": "중국 본토 최적화 경로",
+        "aiCodeMirrorGlobal": "글로벌 고보호 경로",
+        "aiCodeMirrorDomestic": "중국 본토 최적화 경로",
         "standard": "표준 URL",
         "direct": "직접 연결 URL",
         "domestic": "중국 본토 경로",
@@ -2156,8 +2157,8 @@
         "global": "글로벌"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "전 세계 접속을 위한 보호 수준이 높은 경로입니다.",
-         "aiCodeMirrorDomestic": "중국 본토 네트워크에 최적화된 경로입니다.",
+        "aiCodeMirrorGlobal": "전 세계 접속을 위한 보호 수준이 높은 경로입니다.",
+        "aiCodeMirrorDomestic": "중국 본토 네트워크에 최적화된 경로입니다.",
         "domestic": "중국 본토의 사용자 및 워크로드용입니다. 본토 네트워크에서 일반적으로 대기 시간이 더 짧습니다.",
         "overseas": "해외 배포, 국경 간 액세스 또는 해외 모델이 필요한 워크로드용입니다.",
         "mainlandChinaRecommended": "중국 본토 네트워크의 사용자 및 워크로드에 권장됩니다.",
@@ -2428,5 +2429,47 @@
     "error": "바인딩에 실패했습니다. 다시 시작하세요.",
     "unsupported": "이 서버는 SIWC 바인딩을 지원하지 않습니다.",
     "expired": "바인딩 세션이 만료되었습니다. 다시 시작하세요."
+  },
+  "hub": {
+    "header": "CLI Proxy API Management Center",
+    "navigation": "Hub navigation",
+    "refresh": "Refresh",
+    "eyebrow": "Usage overview",
+    "title": "Organizations",
+    "subtitle": "Usage overview for {{organization}}",
+    "organization": "Organization",
+    "all_organizations": "All organizations",
+    "period": "Period",
+    "days": "{{count}} days",
+    "reported_total": "Reported total",
+    "input_tokens": "Input tokens",
+    "output_tokens": "Output tokens",
+    "cache_read": "Cache read",
+    "cache_creation": "Cache creation",
+    "reasoning_tokens": "Reasoning tokens",
+    "cache_note": "Reported separately; included in provider totals where applicable",
+    "requests": "Requests",
+    "errors": "{{count}} errors",
+    "errors_short": "Errors",
+    "usage_summary": "Usage summary",
+    "daily_activity": "Daily activity",
+    "daily_chart_label": "Daily reported token activity",
+    "collector_status": "Collector status",
+    "last_success": "Last successful collection {{date}}",
+    "never_collected": "No successful collection yet",
+    "status_ok": "Current",
+    "status_error": "Error",
+    "status_waiting": "Waiting",
+    "no_collector_data": "No collector status reported",
+    "updated": "Data updated {{date}}",
+    "model_usage": "Usage by model",
+    "provider": "Provider",
+    "model": "Model",
+    "no_activity": "No usage recorded in this period.",
+    "empty_title": "No token usage yet",
+    "empty_description": "Usage will appear here after the collector records its first report.",
+    "load_error": "Could not load hub data",
+    "loading": "Loading usage…",
+    "retry": "Try again"
   }
 }

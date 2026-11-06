@@ -1,0 +1,309 @@
+.page {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: clamp(18px, 3vh, 36px);
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.pageHeader h1 {
+  margin: 7px 0 6px;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -0.04em;
+}
+.pageHeader p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+.kicker {
+  color: var(--viz-success);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.filters {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.filter,
+.periodGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 180px;
+}
+.filter > span,
+.periodGroup > span {
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.periodButtons {
+  display: flex;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-primary);
+}
+.periodButtons button {
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.periodButtons button:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+.periodButtons .periodActive {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  box-shadow: inset 0 0 0 1px var(--border-hover);
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+}
+.metricCard {
+  min-width: 0;
+  padding: 17px 16px !important;
+}
+.metricStrong {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--viz-success) 12%, var(--bg-primary)),
+    var(--bg-primary)
+  ) !important;
+}
+.metricLabel {
+  color: var(--text-tertiary);
+  font-size: 11px;
+  min-height: 28px;
+}
+.metricValue {
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 670;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.metricStrong .metricValue {
+  color: var(--viz-success);
+}
+.metricNote {
+  margin-top: 5px;
+  color: var(--text-quaternary);
+  font-size: 10px;
+}
+.panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+  gap: 16px;
+}
+.panel {
+  min-width: 0;
+}
+.cardMeta {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+.chart {
+  height: 205px;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 2px 0;
+}
+.barColumn {
+  min-width: 15px;
+  flex: 1 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-quaternary);
+  font-size: 9px;
+}
+.barTrack {
+  height: 100%;
+  width: min(100%, 18px);
+  display: flex;
+  align-items: end;
+  overflow: hidden;
+  border-radius: 5px 5px 2px 2px;
+  background: color-mix(in srgb, var(--bg-tertiary) 68%, transparent);
+}
+.bar {
+  width: 100%;
+  min-height: 3px;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(
+    to top,
+    var(--viz-success),
+    color-mix(in srgb, var(--viz-success) 48%, #fff)
+  );
+}
+.statusList {
+  display: flex;
+  flex-direction: column;
+}
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.statusRow:last-child {
+  border: 0;
+}
+.statusDot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: var(--viz-success);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--viz-success) 13%, transparent);
+}
+.statusBad {
+  background: var(--viz-failure);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--viz-failure) 13%, transparent);
+}
+.statusText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.statusText b {
+  font-size: 13px;
+}
+.statusText span {
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.statusLabel {
+  color: var(--text-tertiary);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.updated {
+  margin-top: 14px;
+  color: var(--text-quaternary);
+  font-size: 10px;
+}
+.tableCard {
+  min-width: 0;
+}
+.tableWrap {
+  overflow-x: auto;
+}
+.tableWrap table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: 12px;
+}
+.tableWrap th {
+  padding: 10px 12px;
+  text-align: right;
+  color: var(--text-tertiary);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border-color);
+}
+.tableWrap td {
+  padding: 12px;
+  text-align: right;
+  border-bottom: 1px solid var(--border-color);
+  font-variant-numeric: tabular-nums;
+}
+.tableWrap th:first-child,
+.tableWrap td:first-child,
+.tableWrap th:nth-child(2),
+.tableWrap td:nth-child(2),
+.tableWrap th:nth-child(3),
+.tableWrap td:nth-child(3) {
+  text-align: left;
+}
+.tableWrap tr:last-child td {
+  border-bottom: 0;
+}
+.modelName {
+  font-weight: 600;
+}
+.noData,
+.loading {
+  padding: 28px 8px;
+  color: var(--text-tertiary);
+  text-align: center;
+  font-size: 13px;
+}
+.emptyCard {
+  padding: 14px;
+}
+.error {
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--viz-failure) 35%, transparent);
+  border-radius: 10px;
+  color: var(--viz-failure);
+  background: color-mix(in srgb, var(--viz-failure) 7%, var(--bg-primary));
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 800px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .page {
+    gap: 16px;
+  }
+  .filters {
+    width: 100%;
+    align-items: stretch;
+  }
+  .filter,
+  .periodGroup {
+    min-width: 0;
+    flex: 1;
+  }
+  .periodButtons button {
+    flex: 1;
+    padding-inline: 7px;
+  }
+}

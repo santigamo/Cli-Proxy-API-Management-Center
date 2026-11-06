@@ -94,6 +94,13 @@ The output is **`dist/index.html`**, with JavaScript, CSS, and bundled assets in
 
 Use `bun run preview` to preview locally. Prefer an HTTP server over opening the file via `file://`, which can encounter browser CORS restrictions.
 
+### Organization hub (fork)
+
+This fork also includes an optional read-only usage dashboard for **All / Oasis / Stradem**. Build it
+with `VITE_HUB_MODE=true bun run build`; the default build remains the standard management UI. The
+hub browser receives sanitized usage aggregates only and never receives management keys. See
+[`server/README.md`](server/README.md) for the local collector and deployment setup.
+
 <details>
 <summary><strong>Release details</strong></summary>
 

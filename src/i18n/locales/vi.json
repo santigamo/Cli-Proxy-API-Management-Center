@@ -1907,7 +1907,8 @@
     "russian": "Русский",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어",
-    "turkish": "Tiếng Thổ Nhĩ Kỳ"
+    "turkish": "Tiếng Thổ Nhĩ Kỳ",
+    "spanish": "Tiếng Tây Ban Nha"
   },
   "theme": {
     "switch": "Giao diện",
@@ -1955,7 +1956,7 @@
       "activeCount": "{{active}}/{{total}} đang hoạt động"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "gemini": "Gemini",
       "interactions": "Interactions API",
       "codex": "Codex",
@@ -2021,8 +2022,8 @@
       "urlMode": "URL {{provider}}",
       "urlHint": "Mọi URL dùng cùng quy ước API. Lưu chỉ ghi endpoint của giao thức được nhóm hiện tại.",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "Tuyến toàn cầu được bảo vệ cao",
-         "aiCodeMirrorDomestic": "Tuyến tối ưu cho Trung Quốc đại lục",
+        "aiCodeMirrorGlobal": "Tuyến toàn cầu được bảo vệ cao",
+        "aiCodeMirrorDomestic": "Tuyến tối ưu cho Trung Quốc đại lục",
         "standard": "URL chuẩn",
         "direct": "URL trực tiếp",
         "domestic": "Tuyến Trung Quốc đại lục",
@@ -2031,8 +2032,8 @@
         "global": "Toàn cầu"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "Tuyến có mức bảo vệ cao dành cho truy cập toàn cầu.",
-         "aiCodeMirrorDomestic": "Tuyến được tối ưu cho mạng tại Trung Quốc đại lục.",
+        "aiCodeMirrorGlobal": "Tuyến có mức bảo vệ cao dành cho truy cập toàn cầu.",
+        "aiCodeMirrorDomestic": "Tuyến được tối ưu cho mạng tại Trung Quốc đại lục.",
         "domestic": "Dành cho người dùng và khối lượng công việc tại Trung Quốc đại lục; thường có độ trễ thấp hơn trên mạng đại lục.",
         "overseas": "Dành cho triển khai nước ngoài, truy cập xuyên biên giới hoặc khối lượng công việc cần model nước ngoài.",
         "mainlandChinaRecommended": "Khuyến nghị cho người dùng và khối lượng công việc trên mạng Trung Quốc đại lục.",
@@ -2434,5 +2435,47 @@
     "error": "Liên kết thất bại. Hãy bắt đầu lại.",
     "unsupported": "Máy chủ này không hỗ trợ liên kết SIWC.",
     "expired": "Phiên liên kết đã hết hạn. Hãy bắt đầu lại."
+  },
+  "hub": {
+    "header": "CLI Proxy API Management Center",
+    "navigation": "Hub navigation",
+    "refresh": "Refresh",
+    "eyebrow": "Usage overview",
+    "title": "Organizations",
+    "subtitle": "Usage overview for {{organization}}",
+    "organization": "Organization",
+    "all_organizations": "All organizations",
+    "period": "Period",
+    "days": "{{count}} days",
+    "reported_total": "Reported total",
+    "input_tokens": "Input tokens",
+    "output_tokens": "Output tokens",
+    "cache_read": "Cache read",
+    "cache_creation": "Cache creation",
+    "reasoning_tokens": "Reasoning tokens",
+    "cache_note": "Reported separately; included in provider totals where applicable",
+    "requests": "Requests",
+    "errors": "{{count}} errors",
+    "errors_short": "Errors",
+    "usage_summary": "Usage summary",
+    "daily_activity": "Daily activity",
+    "daily_chart_label": "Daily reported token activity",
+    "collector_status": "Collector status",
+    "last_success": "Last successful collection {{date}}",
+    "never_collected": "No successful collection yet",
+    "status_ok": "Current",
+    "status_error": "Error",
+    "status_waiting": "Waiting",
+    "no_collector_data": "No collector status reported",
+    "updated": "Data updated {{date}}",
+    "model_usage": "Usage by model",
+    "provider": "Provider",
+    "model": "Model",
+    "no_activity": "No usage recorded in this period.",
+    "empty_title": "No token usage yet",
+    "empty_description": "Usage will appear here after the collector records its first report.",
+    "load_error": "Could not load hub data",
+    "loading": "Loading usage…",
+    "retry": "Try again"
   }
 }
