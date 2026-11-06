@@ -96,9 +96,10 @@ Use `bun run preview` to preview locally. Prefer an HTTP server over opening the
 
 ### Organization hub (fork)
 
-This fork also includes an optional read-only usage dashboard for **All / Oasis / Stradem**. Build it
-with `VITE_HUB_MODE=true bun run build`; the default build remains the standard management UI. The
-hub browser receives sanitized usage aggregates only and never receives management keys. See
+This fork also includes an optional organization hub for **All / Oasis / Stradem**. Build it with
+`VITE_HUB_MODE=true bun run build`; the default build remains the standard management UI. The hub
+browser uses a same-origin gateway for native management calls; the server injects management keys
+and keeps them out of the browser. Usage aggregates are sanitized before storage. See
 [`server/README.md`](server/README.md) for the local collector and deployment setup.
 
 <details>

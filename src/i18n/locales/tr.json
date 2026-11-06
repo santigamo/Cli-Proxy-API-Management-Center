@@ -2471,6 +2471,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} gün"
+    "day": "{{count}} gün",
+    "switching": "Kuruluşa bağlanılıyor…",
+    "session_expired": "Kuruluş oturumu sona erdi. Yeniden bağlanmak için tekrar seçin."
   }
 }

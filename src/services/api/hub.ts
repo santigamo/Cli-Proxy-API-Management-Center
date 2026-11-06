@@ -65,6 +65,21 @@ export const getHubSummaryUrl = (days: number, organization: string) => {
   return `/api/summary?${params.toString()}`;
 };
 
+export const getHubOrganizationApiBase = (organization: string, origin: string) =>
+  `${origin.replace(/\/$/, '')}/organizations/${encodeURIComponent(organization)}`;
+
+export const getHubLoginCredentials = (organization: string, origin: string) => ({
+  apiBase: getHubOrganizationApiBase(organization, origin),
+  managementKey: 'managed-on-server',
+  rememberPassword: false,
+});
+
+export const isHubManagementApiBase = (apiBase: string, hubMode: boolean) =>
+  hubMode && /\/organizations\/[^/]+\/v8\/management$/.test(apiBase);
+
+export const hubManagementRequestHeaders = (apiBase: string, hubMode: boolean) =>
+  isHubManagementApiBase(apiBase, hubMode) ? { 'X-Hub-Request': '1' } : {};
+
 async function getJson<T>(url: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(url, { method: 'GET', signal, credentials: 'omit' });
   if (!response.ok) throw new Error(`Hub request failed (${response.status})`);

@@ -2477,6 +2477,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} ngày"
+    "day": "{{count}} ngày",
+    "switching": "Đang kết nối với tổ chức…",
+    "session_expired": "Phiên của tổ chức đã hết hạn. Hãy chọn lại để kết nối."
   }
 }

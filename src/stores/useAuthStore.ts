@@ -16,6 +16,8 @@ import { useModelsStore } from './useModelsStore';
 import { useQuotaStore } from './useQuotaStore';
 import { detectApiBaseFromLocation, normalizeApiBase } from '@/utils/connection';
 
+const hubMode = import.meta.env?.VITE_HUB_MODE === 'true';
+
 interface AuthStoreState extends AuthState {
   connectionStatus: ConnectionStatus;
 
@@ -112,6 +114,7 @@ export const useAuthStore = create<AuthStoreState>()(
         const apiBase = normalizeApiBase(credentials.apiBase);
         const managementKey = credentials.managementKey.trim();
         const rememberPassword = credentials.rememberPassword ?? get().rememberPassword ?? false;
+        let loginRevision: number | null = null;
 
         try {
           set({
@@ -132,6 +135,7 @@ export const useAuthStore = create<AuthStoreState>()(
 
           // 测试连接 - 获取配置。只在 v8 路由不存在时诊断旧版后端。
           const revision = apiClient.getConnectionRevision();
+          loginRevision = revision;
           try {
             await useConfigStore.getState().fetchConfig(true);
           } catch (error) {
@@ -146,6 +150,10 @@ export const useAuthStore = create<AuthStoreState>()(
             throw error;
           }
 
+          if (revision !== apiClient.getConnectionRevision()) {
+            throw new Error('Connection changed while signing in');
+          }
+
           // 登录成功
           set({
             isAuthenticated: true,
@@ -154,13 +162,17 @@ export const useAuthStore = create<AuthStoreState>()(
             rememberPassword,
             connectionStatus: 'connected',
           });
-          if (rememberPassword) {
-            localStorage.setItem('isLoggedIn', 'true');
-          } else {
-            localStorage.removeItem('isLoggedIn');
+          if (!hubMode) {
+            if (rememberPassword) {
+              localStorage.setItem('isLoggedIn', 'true');
+            } else {
+              localStorage.removeItem('isLoggedIn');
+            }
           }
         } catch (error: unknown) {
-          set({ connectionStatus: 'error' });
+          if (loginRevision === apiClient.getConnectionRevision()) {
+            set({ connectionStatus: 'error' });
+          }
           throw error;
         }
       },
@@ -181,7 +193,7 @@ export const useAuthStore = create<AuthStoreState>()(
           supportsPlugin: false,
           connectionStatus: 'disconnected',
         });
-        localStorage.removeItem('isLoggedIn');
+        if (!hubMode) localStorage.removeItem('isLoggedIn');
       },
 
       // 检查认证状态
@@ -232,6 +244,7 @@ export const useAuthStore = create<AuthStoreState>()(
       name: STORAGE_KEY_AUTH,
       storage: createJSONStorage(() => ({
         getItem: (name) => {
+          if (hubMode) return null;
           // Retire all pre-v2 login credentials without decoding or migrating them.
           localStorage.removeItem('managementKey');
           const raw = localStorage.getItem(name);
@@ -244,9 +257,11 @@ export const useAuthStore = create<AuthStoreState>()(
           return data ? JSON.stringify(data) : null;
         },
         setItem: (name, value) => {
+          if (hubMode) return;
           obfuscatedStorage.setItem(name, JSON.parse(value));
         },
         removeItem: (name) => {
+          if (hubMode) return;
           obfuscatedStorage.removeItem(name);
         },
       })),

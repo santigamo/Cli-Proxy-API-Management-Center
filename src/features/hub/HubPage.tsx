@@ -1,16 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { Select, type SelectOption } from '@/components/ui/Select';
-import {
-  filterHubRows,
-  getHubOrganizations,
-  getHubSummary,
-  summarizeHubTotals,
-  type HubOrganization,
-  type HubSummary,
-} from '@/services/api/hub';
+import { getHubSummary, summarizeHubTotals, type HubSummary } from '@/services/api/hub';
+import { useHubSession } from './hubSessionContext';
 import styles from './HubPage.module.scss';
 
 const PERIODS = [1, 7, 30, 90] as const;
@@ -18,34 +11,17 @@ const number = (value: number) => new Intl.NumberFormat().format(value || 0);
 
 export function HubPage({ refreshKey }: { refreshKey: number }) {
   const { t, i18n } = useTranslation();
-  const [organizations, setOrganizations] = useState<HubOrganization[] | null>(null);
-  const [organization, setOrganization] = useState('all');
+  const { error: sessionError, organizations } = useHubSession();
   const [days, setDays] = useState<number>(30);
   const [summary, setSummary] = useState<HubSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [organizationError, setOrganizationError] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
-    getHubOrganizations(controller.signal)
-      .then((items) => {
-        if (controller.signal.aborted) return;
-        setOrganizations(items);
-        setOrganizationError(null);
-      })
-      .catch((cause: unknown) => {
-        if (!controller.signal.aborted)
-          setOrganizationError(cause instanceof Error ? cause.message : t('hub.load_error'));
-      });
-    return () => controller.abort();
-  }, [refreshKey, retry, t]);
-
-  useEffect(() => {
-    const controller = new AbortController();
     setLoading(true);
-    getHubSummary(days, organization, controller.signal)
+    getHubSummary(days, 'all', controller.signal)
       .then((data) => {
         if (controller.signal.aborted) return;
         setSummary(data);
@@ -61,29 +37,10 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [days, organization, refreshKey, retry, t]);
+  }, [days, refreshKey, retry, t]);
 
-  const selectedName =
-    organization === 'all'
-      ? t('hub.all_organizations')
-      : (organizations?.find((item) => item.id === organization)?.name ?? organization);
-  const organizationOptions: SelectOption[] = useMemo(
-    () => [
-      { value: 'all', label: t('hub.all_organizations') },
-      ...(organizations ?? []).map(({ id, name }) => ({ value: id, label: name })),
-    ],
-    [organizations, t]
-  );
-  const scoped =
-    summary && organization !== 'all'
-      ? {
-          ...summary,
-          models: filterHubRows(summary.models, organization),
-          daily: filterHubRows(summary.daily, organization),
-          health: filterHubRows(summary.health, organization),
-        }
-      : summary;
-  const totals = summary ? summarizeHubTotals(summary.totals, organization) : undefined;
+  const scoped = summary;
+  const totals = summary ? summarizeHubTotals(summary.totals, 'all') : undefined;
   const hasActivity = Boolean(scoped && (scoped.totals.length > 0 || scoped.models.length > 0));
   const dailyRows = scoped?.daily.reduce((result, row) => {
     const previous = result.get(row.day) ?? {
@@ -124,18 +81,9 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
         <div>
           <div className={styles.kicker}>{t('hub.eyebrow')}</div>
           <h1>{t('hub.title')}</h1>
-          <p>{t('hub.subtitle', { organization: selectedName })}</p>
+          <p>{t('hub.subtitle', { organization: t('hub.all_organizations') })}</p>
         </div>
         <div className={styles.filters}>
-          <label className={styles.filter}>
-            <span>{t('hub.organization')}</span>
-            <Select
-              value={organization}
-              options={organizationOptions}
-              onChange={setOrganization}
-              ariaLabel={t('hub.organization')}
-            />
-          </label>
           <div className={styles.periodGroup} role="group" aria-label={t('hub.period')}>
             <span>{t('hub.period')}</span>
             <div className={styles.periodButtons}>
@@ -155,9 +103,9 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
         </div>
       </header>
 
-      {(organizationError || error) && (
+      {(sessionError || error) && (
         <div className={styles.error} role="alert">
-          {t('hub.load_error')}: {organizationError ?? error}
+          {t('hub.load_error')}: {sessionError ?? error}
         </div>
       )}
       {loading && (
@@ -165,12 +113,12 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
           {t('hub.loading')}
         </div>
       )}
-      {!loading && !error && !organizationError && !hasActivity && (
+      {!loading && !error && !sessionError && !hasActivity && (
         <Card className={styles.emptyCard}>
           <EmptyState title={t('hub.empty_title')} description={t('hub.empty_description')} />
         </Card>
       )}
-      {!loading && !error && !organizationError && scoped && (
+      {!loading && !error && !sessionError && scoped && (
         <>
           <section className={styles.metrics} aria-label={t('hub.usage_summary')}>
             {metricItems.map((item) => (
@@ -315,7 +263,7 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
           </Card>
         </>
       )}
-      {(error || organizationError) && (
+      {(error || sessionError) && (
         <button
           className={styles.retry}
           type="button"

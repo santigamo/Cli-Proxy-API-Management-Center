@@ -2471,6 +2471,8 @@
     "load_error": "No se pudieron cargar los datos",
     "loading": "Cargando uso…",
     "retry": "Reintentar",
-    "day": "{{count}} día"
+    "day": "{{count}} día",
+    "switching": "Conectando con la organización…",
+    "session_expired": "La sesión de esta organización ha caducado. Selecciónala de nuevo para reconectar."
   }
 }

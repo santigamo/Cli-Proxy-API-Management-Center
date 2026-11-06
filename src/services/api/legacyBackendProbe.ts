@@ -15,7 +15,12 @@ export async function probeLegacyBackend(apiBase: string, managementKey: string)
 
   try {
     const response = await axios.get<unknown>(`${base}/v0/management/config`, {
-      headers: { Authorization: `Bearer ${managementKey}` },
+      headers: {
+        Authorization: `Bearer ${managementKey}`,
+        ...(import.meta.env?.VITE_HUB_MODE === 'true' && base.includes('/organizations/')
+          ? { 'X-Hub-Request': '1' }
+          : {}),
+      },
       timeout: 3000,
       // This request must not affect the v8 client's auth or version events.
       maxRedirects: 0,

@@ -2497,6 +2497,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} 天"
+    "day": "{{count}} 天",
+    "switching": "正在連線組織…",
+    "session_expired": "此組織工作階段已過期，請重新選取以連線。"
   }
 }

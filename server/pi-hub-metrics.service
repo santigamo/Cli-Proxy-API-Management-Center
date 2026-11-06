@@ -1,5 +1,5 @@
 [Unit]
-Description=Local read-only CLIProxyAPI usage dashboard
+Description=Local organization-scoped CLIProxyAPI hub and usage dashboard
 After=network.target
 
 [Service]

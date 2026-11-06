@@ -15,6 +15,9 @@ import {
 } from '@/utils/constants';
 import { computeApiUrl } from '@/utils/connection';
 import { parseApiErrorResponse } from './apiError';
+import { isHubManagementApiBase } from './hub';
+
+type HubTrackedRequestConfig = AxiosRequestConfig & { __hubConnectionRevision?: number };
 
 class ApiClient {
   private instance: AxiosInstance;
@@ -131,6 +134,15 @@ class ApiClient {
           config.headers.Authorization = `Bearer ${this.managementKey}`;
         }
 
+        const isHubRequest = isHubManagementApiBase(
+          this.apiBase,
+          import.meta.env?.VITE_HUB_MODE === 'true'
+        );
+        if (isHubRequest) {
+          config.headers['X-Hub-Request'] = '1';
+          (config as HubTrackedRequestConfig).__hubConnectionRevision = this.connectionRevision;
+        }
+
         return config;
       },
       (error) => Promise.reject(this.handleError(error))
@@ -139,6 +151,14 @@ class ApiClient {
     // Response interceptor
     this.instance.interceptors.response.use(
       (response) => {
+        const hubRevision = (response.config as HubTrackedRequestConfig).__hubConnectionRevision;
+        if (
+          import.meta.env?.VITE_HUB_MODE === 'true' &&
+          hubRevision !== undefined &&
+          hubRevision !== this.connectionRevision
+        ) {
+          return response;
+        }
         const headers = response.headers as Record<string, string | undefined>;
         const cpaVersion = this.readHeader(headers, CPA_VERSION_HEADER_KEYS);
         const cpaBuildDate = this.readHeader(headers, CPA_BUILD_DATE_HEADER_KEYS);
@@ -164,14 +184,22 @@ class ApiClient {
 
         return response;
       },
-      (error) => Promise.reject(this.handleError(error))
+      (error) => {
+        const hubRevision = (error as { config?: HubTrackedRequestConfig })?.config
+          ?.__hubConnectionRevision;
+        const allowSideEffects =
+          import.meta.env?.VITE_HUB_MODE !== 'true' ||
+          hubRevision === undefined ||
+          hubRevision === this.connectionRevision;
+        return Promise.reject(this.handleError(error, allowSideEffects));
+      }
     );
   }
 
   /**
    * Error handling
    */
-  private handleError(error: unknown): ApiError {
+  private handleError(error: unknown, allowSideEffects = true): ApiError {
     if (axios.isAxiosError(error)) {
       const responseData: unknown = error.response?.data;
       const parsedError = parseApiErrorResponse(responseData, error.message);
@@ -184,7 +212,7 @@ class ApiClient {
       apiError.data = responseData;
 
       // Dispatch logout for unauthorized responses
-      if (this.emitEvents() && error.response?.status === 401) {
+      if (allowSideEffects && this.emitEvents() && error.response?.status === 401) {
         window.dispatchEvent(new Event('unauthorized'));
       }
 

@@ -2471,6 +2471,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} day"
+    "day": "{{count}} day",
+    "switching": "Connecting to organization…",
+    "session_expired": "This organization session expired. Select it again to reconnect."
   }
 }

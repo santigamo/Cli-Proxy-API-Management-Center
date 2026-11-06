@@ -10,9 +10,12 @@ import { useThemeStore } from '@/stores/useThemeStore';
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import type { Language, Theme } from '@/types';
 import './hubLayout.scss';
+import { HubOrganizationControl } from './HubSession';
+import { useHubSession } from './hubSessionContext';
 
 export function HubLayout() {
   const { t } = useTranslation();
+  const { switching } = useHubSession();
   const [refreshKey, setRefreshKey] = useState(0);
   const language = useLanguageStore((state) => state.language);
   const setLanguage = useLanguageStore((state) => state.setLanguage);
@@ -28,6 +31,7 @@ export function HubLayout() {
           {t('hub.header')}
         </div>
         <div className="header-actions floating-actions">
+          <HubOrganizationControl />
           <Select
             value={language}
             options={LANGUAGE_ORDER.map((value) => ({
@@ -82,7 +86,11 @@ export function HubLayout() {
         </aside>
         <div className="content">
           <main className="main-content hub-main-content">
-            <HubPage refreshKey={refreshKey} />
+            {switching ? (
+              <div className="hub-switching">{t('hub.switching')}</div>
+            ) : (
+              <HubPage refreshKey={refreshKey} />
+            )}
           </main>
         </div>
       </div>

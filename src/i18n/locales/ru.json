@@ -2465,6 +2465,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} день"
+    "day": "{{count}} день",
+    "switching": "Подключение к организации…",
+    "session_expired": "Сеанс организации истёк. Выберите её снова, чтобы подключиться."
   }
 }

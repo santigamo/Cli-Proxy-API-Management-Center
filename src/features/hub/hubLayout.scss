@@ -38,6 +38,22 @@
 .hub-header .header-actions > * {
   pointer-events: auto;
 }
+.hub-header .header-actions > .hub-org-control {
+  width: 126px;
+  flex-basis: 126px;
+}
+.hub-org-control {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+.hub-org-control > div {
+  width: 100%;
+  min-width: 0;
+}
+.hub-org-control button {
+  max-width: 100%;
+}
 .hub-header .header-actions > div {
   width: 112px;
   flex: 0 1 112px;
@@ -67,6 +83,10 @@
     width: 96px;
     flex-basis: 96px;
   }
+  .hub-header .header-actions > .hub-org-control {
+    width: 108px;
+    flex-basis: 108px;
+  }
   .hub-shell .header-actions .btn {
     min-width: 74px;
     padding-inline: 7px;
@@ -74,6 +94,28 @@
   .hub-main-content {
     padding-top: calc(var(--header-height) + 16px);
   }
+}
+
+.hub-managed-control {
+  display: flex;
+  align-items: center;
+  width: 126px;
+  margin-inline: 2px;
+}
+
+.hub-initializing {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+
+.hub-switching {
+  min-height: 40vh;
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 380px) {

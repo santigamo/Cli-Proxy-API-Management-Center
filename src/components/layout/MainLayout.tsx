@@ -309,7 +309,13 @@ const THEME_CARDS: Array<{
   },
 ];
 
-export function MainLayout() {
+export function MainLayout({
+  hubControl,
+  hubMode = false,
+}: {
+  hubControl?: ReactNode;
+  hubMode?: boolean;
+} = {}) {
   const { t } = useTranslation();
   const { showNotification } = useNotificationStore();
   const location = useLocation();
@@ -1034,6 +1040,7 @@ export function MainLayout() {
           >
             {headerIcons.refresh}
           </Button>
+          {hubMode && hubControl ? <div className="hub-managed-control">{hubControl}</div> : null}
           <div className={`language-menu ${languageMenuOpen ? 'open' : ''}`} ref={languageMenuRef}>
             <Button
               variant="ghost"
@@ -1141,9 +1148,11 @@ export function MainLayout() {
               </div>
             )}
           </div>
-          <Button variant="ghost" size="sm" onClick={logout} title={t('header.logout')}>
-            {headerIcons.logout}
-          </Button>
+          {!hubMode && (
+            <Button variant="ghost" size="sm" onClick={logout} title={t('header.logout')}>
+              {headerIcons.logout}
+            </Button>
+          )}
         </div>
       </header>
 

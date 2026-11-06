@@ -4,6 +4,8 @@ import { apiClient } from '@/services/api/client';
 import { LegacyBackendError } from '@/services/api/legacyBackendProbe';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useConfigStore } from '@/stores/useConfigStore';
+import { useModelsStore } from '@/stores/useModelsStore';
+import { useQuotaStore } from '@/stores/useQuotaStore';
 
 const spies: Array<{ mockRestore(): void }> = [];
 const originalFetchConfig = useConfigStore.getState().fetchConfig;
@@ -90,5 +92,46 @@ describe('legacy backend login diagnostic', () => {
     });
     spies.push(probe);
     await expect(useAuthStore.getState().login(credentials)).rejects.toBe(error);
+  });
+
+  test('a pending organization login cannot reactivate a session after logout clears it', async () => {
+    let finishFetch: ((value: Record<string, never>) => void) | undefined;
+    const pendingConfig = new Promise<Record<string, never>>((resolve) => {
+      finishFetch = resolve;
+    });
+    spies.push(
+      spyOn(useConfigStore.getState(), 'fetchConfig').mockImplementation(() => pendingConfig)
+    );
+
+    useConfigStore.setState({ config: { proxyUrl: 'previous-org' } });
+    useModelsStore.setState({
+      models: [{ name: 'previous-org-model' }],
+      cache: {
+        data: [{ name: 'previous-org-model' }],
+        timestamp: Date.now(),
+        apiBase: 'https://previous.invalid',
+        apiKey: '',
+      },
+    });
+    useQuotaStore.getState().setCodexQuota({
+      previousOrg: { status: 'success', windows: [] },
+    });
+
+    const loginPromise = useAuthStore.getState().login({
+      apiBase: 'https://hub.invalid/organizations/oasis',
+      managementKey: 'managed-on-server',
+      rememberPassword: false,
+    });
+    expect(useConfigStore.getState().config).toBeNull();
+    expect(useModelsStore.getState().models).toEqual([]);
+    expect(useModelsStore.getState().cache).toBeNull();
+    expect(useQuotaStore.getState().codexQuota).toEqual({});
+    useAuthStore.getState().logout();
+    finishFetch?.({});
+
+    await expect(loginPromise).rejects.toThrow('Connection changed while signing in');
+    expect(useAuthStore.getState().isAuthenticated).toBe(false);
+    expect(useAuthStore.getState().apiBase).toBe('');
+    expect(useAuthStore.getState().managementKey).toBe('');
   });
 });

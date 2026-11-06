@@ -44,6 +44,27 @@ const buildV1ModelsEndpoint = (baseUrl: string): string => {
   return `${trimmed}/v1/models`;
 };
 
+export function buildModelsRequest(
+  baseUrl: string,
+  apiKey: string | undefined,
+  headers: Record<string, string>,
+  hubMode: boolean
+): { endpoint: string; headers?: Record<string, string> } {
+  const endpoint = buildV1ModelsEndpoint(baseUrl);
+  const hubOrganizationBase = /\/organizations\/[^/]+$/.test(normalizeApiBase(baseUrl));
+  if (hubMode) {
+    return hubOrganizationBase
+      ? { endpoint, headers: { 'X-Hub-Request': '1' } }
+      : { endpoint: '', headers: undefined };
+  }
+
+  const resolvedHeaders = { ...headers };
+  if (apiKey && !hasHeader(resolvedHeaders, 'authorization')) {
+    resolvedHeaders.Authorization = `Bearer ${apiKey}`;
+  }
+  return { endpoint, headers: Object.keys(resolvedHeaders).length ? resolvedHeaders : undefined };
+}
+
 const buildClaudeModelsEndpoint = (baseUrl: string): string => {
   const normalized = normalizeApiBase(baseUrl);
   const fallback = normalized || DEFAULT_CLAUDE_BASE_URL;
@@ -87,18 +108,18 @@ export const modelsApi = {
    * Fetch available models from /v1/models endpoint (for system info page)
    */
   async fetchModels(baseUrl: string, apiKey?: string, headers: Record<string, string> = {}) {
-    const endpoint = buildV1ModelsEndpoint(baseUrl);
+    const request = buildModelsRequest(
+      baseUrl,
+      apiKey,
+      headers,
+      import.meta.env?.VITE_HUB_MODE === 'true'
+    );
+    const endpoint = request.endpoint;
     if (!endpoint) {
       throw new Error('Invalid base url');
     }
-
-    const resolvedHeaders = { ...headers };
-    if (apiKey && !hasHeader(resolvedHeaders, 'authorization')) {
-      resolvedHeaders.Authorization = `Bearer ${apiKey}`;
-    }
-
     const response = await axios.get(endpoint, {
-      headers: Object.keys(resolvedHeaders).length ? resolvedHeaders : undefined,
+      headers: request.headers,
     });
     const payload = response.data?.data ?? response.data?.models ?? response.data;
     return normalizeModelList(payload, { dedupe: true });

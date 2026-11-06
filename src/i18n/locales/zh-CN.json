@@ -2469,6 +2469,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}} 天"
+    "day": "{{count}} 天",
+    "switching": "正在连接组织…",
+    "session_expired": "此组织会话已过期，请重新选择以连接。"
   }
 }

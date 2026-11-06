@@ -2471,6 +2471,8 @@
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
     "retry": "Try again",
-    "day": "{{count}}일"
+    "day": "{{count}}일",
+    "switching": "조직에 연결하는 중…",
+    "session_expired": "조직 세션이 만료되었습니다. 다시 선택해 연결하세요."
   }
 }
