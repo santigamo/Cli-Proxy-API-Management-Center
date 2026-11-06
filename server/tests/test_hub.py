@@ -94,7 +94,9 @@ class HubTests(unittest.TestCase):
             {"name": "oasis", "label": "Oasis"},
             {"name": "stradem", "label": "Stradem"},
         ]
-        pathlib.Path(Handler.ui_path).write_text("<h1>UI</h1>", encoding="utf-8")
+        pathlib.Path(Handler.ui_path).write_text(
+            '<img src="data:image/jpeg;base64,AA=="><h1>UI</h1>', encoding="utf-8"
+        )
         server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
@@ -106,6 +108,13 @@ class HubTests(unittest.TestCase):
         hub.store(self.db, "oasis", [self.fixture])
         hub.store(self.db, "stradem", [self.fixture])
         base = self._start_server()
+        with urllib.request.urlopen(base + "/") as response:
+            csp = response.headers["Content-Security-Policy"]
+            html = response.read().decode()
+        self.assertIn("data:image/jpeg;base64,AA==", html)
+        self.assertIn("img-src 'self' data:", csp)
+        self.assertIn("connect-src 'self'", csp)
+        self.assertNotIn("https:", csp)
         with urllib.request.urlopen(base + "/api/organizations") as response:
             orgs = json.load(response)
         self.assertEqual(orgs, [{"id": "oasis", "name": "Oasis"}, {"id": "stradem", "name": "Stradem"}])

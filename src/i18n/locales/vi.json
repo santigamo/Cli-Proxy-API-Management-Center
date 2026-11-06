@@ -2476,6 +2476,7 @@
     "empty_description": "Usage will appear here after the collector records its first report.",
     "load_error": "Could not load hub data",
     "loading": "Loading usage…",
-    "retry": "Try again"
+    "retry": "Try again",
+    "day": "{{count}} ngày"
   }
 }

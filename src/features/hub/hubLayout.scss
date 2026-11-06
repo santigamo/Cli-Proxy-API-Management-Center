@@ -30,10 +30,23 @@
 .hub-header .header-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 6px;
+  max-width: calc(100vw - 2 * var(--shell-gutter));
 }
 .hub-header .header-actions > * {
   pointer-events: auto;
+}
+.hub-header .header-actions > div {
+  width: 112px;
+  flex: 0 1 112px;
+}
+.hub-shell .header-actions .btn {
+  width: auto;
+  min-width: 82px;
+  padding: 0 10px;
+  white-space: nowrap;
 }
 .hub-sidebar .nav-item {
   cursor: default;
@@ -47,9 +60,33 @@
     display: none;
   }
   .hub-header .header-actions {
-    margin-right: 14px;
+    margin-right: 0;
+    gap: 5px;
+  }
+  .hub-header .header-actions > div {
+    width: 96px;
+    flex-basis: 96px;
+  }
+  .hub-shell .header-actions .btn {
+    min-width: 74px;
+    padding-inline: 7px;
   }
   .hub-main-content {
     padding-top: calc(var(--header-height) + 16px);
+  }
+}
+
+@media (max-width: 380px) {
+  .hub-header .header-actions {
+    right: 10px;
+    max-width: calc(100vw - 20px);
+  }
+  .hub-header .header-actions > div {
+    width: 86px;
+    flex-basis: 86px;
+  }
+  .hub-shell .header-actions .btn {
+    min-width: 68px;
+    padding-inline: 5px;
   }
 }

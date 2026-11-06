@@ -2470,6 +2470,7 @@
     "empty_description": "El uso aparecerá aquí cuando el recolector registre el primer informe.",
     "load_error": "No se pudieron cargar los datos",
     "loading": "Cargando uso…",
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "day": "{{count}} día"
   }
 }

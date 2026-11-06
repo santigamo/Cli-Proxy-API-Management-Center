@@ -147,7 +147,7 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
                   aria-pressed={days === period}
                   onClick={() => setDays(period)}
                 >
-                  {t('hub.days', { count: period })}
+                  {t(period === 1 ? 'hub.day' : 'hub.days', { count: period })}
                 </button>
               ))}
             </div>
