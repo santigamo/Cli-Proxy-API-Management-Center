@@ -656,6 +656,9 @@ export function MainLayout({
       id: 'observe',
       labelKey: 'nav_groups.observe',
       items: [
+        ...(import.meta.env.VITE_HUB_MODE === 'true'
+          ? [{ path: '/hub-usage', labelKey: 'hub.usage_summary', icon: sidebarIcons.dashboard }]
+          : []),
         {
           path: '/quota',
           labelKey: 'nav.quota_management',

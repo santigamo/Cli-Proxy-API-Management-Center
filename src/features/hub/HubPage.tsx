@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -11,17 +12,24 @@ const number = (value: number) => new Intl.NumberFormat().format(value || 0);
 
 export function HubPage({ refreshKey }: { refreshKey: number }) {
   const { t, i18n } = useTranslation();
-  const { error: sessionError, organizations } = useHubSession();
+  const {
+    error: sessionError,
+    organizations,
+    organization: selectedOrganization,
+  } = useHubSession();
+  const organization = selectedOrganization ?? 'all';
   const [days, setDays] = useState<number>(30);
   const [summary, setSummary] = useState<HubSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
+  const refresh = useCallback(() => setRetry((value) => value + 1), []);
+  useHeaderRefresh(refresh, true);
 
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
-    getHubSummary(days, 'all', controller.signal)
+    getHubSummary(days, organization, controller.signal)
       .then((data) => {
         if (controller.signal.aborted) return;
         setSummary(data);
@@ -37,10 +45,10 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [days, refreshKey, retry, t]);
+  }, [days, organization, refreshKey, retry, t]);
 
   const scoped = summary;
-  const totals = summary ? summarizeHubTotals(summary.totals, 'all') : undefined;
+  const totals = summary ? summarizeHubTotals(summary.totals, organization) : undefined;
   const hasActivity = Boolean(scoped && (scoped.totals.length > 0 || scoped.models.length > 0));
   const dailyRows = scoped?.daily.reduce((result, row) => {
     const previous = result.get(row.day) ?? {
@@ -80,8 +88,15 @@ export function HubPage({ refreshKey }: { refreshKey: number }) {
       <header className={styles.pageHeader}>
         <div>
           <div className={styles.kicker}>{t('hub.eyebrow')}</div>
-          <h1>{t('hub.title')}</h1>
-          <p>{t('hub.subtitle', { organization: t('hub.all_organizations') })}</p>
+          <h1>{t(organization === 'all' ? 'hub.title' : 'hub.usage_summary')}</h1>
+          <p>
+            {t('hub.subtitle', {
+              organization:
+                organization === 'all'
+                  ? t('hub.all_organizations')
+                  : (organizations.find((item) => item.id === organization)?.name ?? organization),
+            })}
+          </p>
         </div>
         <div className={styles.filters}>
           <div className={styles.periodGroup} role="group" aria-label={t('hub.period')}>
